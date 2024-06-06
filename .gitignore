@@ -2,3 +2,5 @@ __pycache__
 .pytest_cache
 reports.html
 /assets
+/result_screenshots
+result_screenshots/

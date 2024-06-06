@@ -8,14 +8,15 @@ from playwright.sync_api import expect,Playwright
     "username, password, casetype",
     [
         ("adtestdotnl@gmail.com", "Micky12345$", "Positivecase"),
+        ("mishafrancis@gmail.com", "Micky12345$", "Negativecase"),
     ],
     # Custom IDs for each test case
-    ids=["Positive-case"]
+    ids=["Positive-case", "Negative-case"]
 )
 
 ### Usecase 1
 def test_Usecase_1_AD_Login_Page_Check(playwright: Playwright,username, password,casetype) -> None:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=False,args=['--disable-blink-features=AutomationControlled'])
         page = browser.new_page()
 
         ## Open URL
@@ -30,18 +31,27 @@ def test_Usecase_1_AD_Login_Page_Check(playwright: Playwright,username, password
         page.get_by_role("button", name="Ga verder Arrow right").click()
         page.get_by_test_id("password-input").fill(password)
         page.get_by_test_id("button").click()
+        page.wait_for_load_state("networkidle")
 
         ## Validation
         if casetype == "Positivecase":
-           expect(page.get_by_text("Inlogpoging geblokkeerd")).to_be_visible()
-        else:
-           expect(page.get_by_text("Invalid credentials")).to_be_visible()
+        #    expect(page.get_by_text("Inlogpoging geblokkeerd")).to_be_visible()
+           expect(page.get_by_title("Micky Mouse").locator("label")).to_be_visible()
+                  
+           ## Screen capture
+           page.wait_for_load_state('load')
+           folder_path = 'result_screenshots'
+           screenshot_path = os.path.join(folder_path, 'Usecase_1_screenshot_Positive.png')
+           page.screenshot(path=screenshot_path)
 
-        ## Screen capture
-        page.wait_for_load_state('load')
-        folder_path = 'result_screenshots'
-        screenshot_path = os.path.join(folder_path, 'Usecase_1_screenshot.png')
-        page.screenshot(path=screenshot_path)
+        else:
+           expect(page.get_by_text("Wachtwoord is niet correct.")).to_be_visible()
+       
+           ## Screen capture
+           page.wait_for_load_state('load')
+           folder_path = 'result_screenshots'
+           screenshot_path = os.path.join(folder_path, 'Usecase_1_screenshot_Negative.png')
+           page.screenshot(path=screenshot_path)
 
         ## Close browser
         browser.close()
@@ -104,3 +114,5 @@ def test_Usecase_3_Sport_Podcast_Check(playwright: Playwright) -> None:
 
         ## Close browser
         browser.close()
+
+

@@ -21,3 +21,9 @@ pip install -r requirements.txt
 
 ## Run tests with html reports:
 pytest testcases.py --html=reports.html
+
+# Test cases
+
+## Usecase 1
+## Usecase 2
+## Usecase 3
