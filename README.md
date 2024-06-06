@@ -22,8 +22,16 @@ pip install -r requirements.txt
 ## Run tests with html reports:
 pytest testcases.py --html=reports.html
 
+
 # Test cases
 
 ## Usecase 1
+- Create a login scenario for testing (Positive & Negative cases)
+
 ## Usecase 2
+- Search for an article
+
 ## Usecase 3
+- Browse Podcast page (https://www.ad.nl/podcasts)
+- User can listen to a podcast
+- Open random podcast and check that correct podcast is opened
