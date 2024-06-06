@@ -35,7 +35,6 @@ def test_Usecase_1_AD_Login_Page_Check(playwright: Playwright,username, password
 
         ## Validation
         if casetype == "Positivecase":
-        #    expect(page.get_by_text("Inlogpoging geblokkeerd")).to_be_visible()
            expect(page.get_by_title("Micky Mouse").locator("label")).to_be_visible()
                   
            ## Screen capture
